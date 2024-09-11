@@ -2,7 +2,6 @@ use std::sync::Arc;
 use axum::{Extension, Json};
 use axum::response::IntoResponse;
 use mysql::PooledConn;
-use reqwest::Error;
 use tokio::sync::Mutex;
 use crate::generic_replies::generic_replies::reply_with_message;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::change_status_by_id::change_status_by_id_sql::change_status_by_id_sql;

@@ -10,18 +10,12 @@ use crate::structs::structs::{AddAdminAccountExtensionBuilder, FetchAdminsDataEx
 
 // Defined routes are used for actions in the Admins screen (__admin-panel)
 
-pub fn admin_actions_crm(arc_sql : Arc<Mutex<PooledConn>>, tokens_pool : Arc<RwLock<Vec<Token>>>) -> Router {
+pub fn admin_actions_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/api/admins/fetch", post(fetch_admins_data))
-            .layer(Extension(FetchAdminsDataExtension {
-                db_pool: Arc::clone(&arc_sql),
-                token_pool : Arc::clone(&tokens_pool)
-            }))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/admins/remove", post(remove_admin_account))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/admins/add", post(add_admin_account))
-            .layer(Extension(AddAdminAccountExtensionBuilder {
-                db_pool: Arc::clone(&arc_sql),
-                token_pool: Arc::clone(&tokens_pool),
-            }))
+            .layer(Extension(Arc::clone(&arc_sql)))
 }

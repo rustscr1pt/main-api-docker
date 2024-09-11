@@ -14,7 +14,7 @@ use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 
 // Defined routes are used for actions with orders from walgreenlogistics.ru in (__admin-panel)
 
-pub fn walgreen_crm(arc_sql : Arc<Mutex<PooledConn>>, telegram_bot : Arc<Mutex<BotInstance>>) -> Router {
+pub fn walgreen_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/api/walgreen/walgreen_requests/get/page", post(get_walgreen_users_by_page))
             .layer(Extension(Arc::clone(&arc_sql)))
@@ -23,10 +23,7 @@ pub fn walgreen_crm(arc_sql : Arc<Mutex<PooledConn>>, telegram_bot : Arc<Mutex<B
         .route("/api/walgreen/walgreen_requests/change_status", post(change_status_walgreen))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/add_note", post(add_note_walgreen))
-            .layer(Extension(SQLAndTelegramWebExtension {
-                arc_sql : Arc::clone(&arc_sql),
-                telegram_bot : Arc::clone(&telegram_bot)
-            }))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/remove_note", post(remove_note_walgreen))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/walgreen/walgreen_requests/remove_order", post(remove_order_walgreen))

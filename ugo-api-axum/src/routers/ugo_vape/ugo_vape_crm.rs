@@ -14,7 +14,7 @@ use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 
 // Defined routes are used for actions with orders from ugo-vape in (__admin-panel)
 
-pub fn ugo_vape_crm(arc_sql : Arc<Mutex<PooledConn>>, telegram_bot : Arc<Mutex<BotInstance>>) -> Router {
+pub fn ugo_vape_crm(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/api/orders/get/page", post(get_orders_by_page))
             .layer(Extension(Arc::clone(&arc_sql)))
@@ -23,10 +23,7 @@ pub fn ugo_vape_crm(arc_sql : Arc<Mutex<PooledConn>>, telegram_bot : Arc<Mutex<B
         .route("/api/orders/change_status", post(change_status_by_id))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/add_note", post(add_note_to_order))
-            .layer(Extension(SQLAndTelegramWebExtension {
-                arc_sql : Arc::clone(&arc_sql),
-                telegram_bot : Arc::clone(&telegram_bot)
-            }))
+            .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/remove_note", post(remove_note_from_order))
             .layer(Extension(Arc::clone(&arc_sql)))
         .route("/api/orders/remove_order", post(remove_order_from_orders))

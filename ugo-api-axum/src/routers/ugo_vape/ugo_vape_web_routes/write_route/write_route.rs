@@ -1,6 +1,8 @@
 use std::sync::Arc;
 use axum::{Extension, Json};
 use axum::response::IntoResponse;
+use mysql::PooledConn;
+use tokio::sync::Mutex;
 use crate::generic_replies::generic_replies::reply_with_message;
 use crate::mysql::check_form_data::check_before_sending;
 use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_order_notification_ugo::write_order_notification_ugo;
@@ -9,8 +11,7 @@ use crate::structs::enums::CheckFieldsCase;
 use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 use crate::structs::structs::{WriteDataBody, WriteToBaseNewCustomer};
 
-pub async fn write_route(main_actor : Extension<SQLAndTelegramWebExtension>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {
-    let cloned_telegram_bot = Arc::clone(&main_actor.telegram_bot);
+pub async fn write_route(main_actor : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {
     match check_before_sending(&body) {
         CheckFieldsCase::Ok => {
             let mut sample_to_write : Vec<WriteToBaseNewCustomer> = Vec::with_capacity(1);
@@ -21,7 +22,7 @@ pub async fn write_route(main_actor : Extension<SQLAndTelegramWebExtension>, Jso
                 customer_email: body.email,
                 customer_self_description: body.about_customer
             });
-            let mut unlocked = main_actor.arc_sql.lock().await;
+            let mut unlocked = main_actor.lock().await;
             match write_route_sql(&mut unlocked, sample_to_write) // Insert and get a response if it was successful or not.
             {
                 Ok(_) => {

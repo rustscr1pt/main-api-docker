@@ -9,11 +9,8 @@ use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 
 // Defined routes are used for actions in the ugo-vape.ru website
 
-pub fn ugo_vape_web(arc_sql : Arc<Mutex<PooledConn>>, telegram_bot : Arc<Mutex<BotInstance>>) -> Router {
+pub fn ugo_vape_web(arc_sql : Arc<Mutex<PooledConn>>) -> Router {
     return Router::new()
         .route("/data/write", post(write_route))
-        .layer(Extension(SQLAndTelegramWebExtension {
-            arc_sql : Arc::clone(&arc_sql),
-            telegram_bot : Arc::clone(&telegram_bot)
-        }))
+            .layer(Extension(Arc::clone(&arc_sql)))
 }

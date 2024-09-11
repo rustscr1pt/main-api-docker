@@ -1,14 +1,10 @@
 use std::sync::Arc;
 use axum::{Router};
-use rustelebot::types::BotInstance;
-use tokio::sync::{Mutex, RwLock};
+use tokio::sync::{Mutex};
 use crate::bind_and_serve::bindings::tokio_bindings;
 use crate::generic_replies::generic_replies::reject_unmatched_connection;
-use crate::mysql::admins_filler::async_admins_filler::admins_filler;
-use crate::mysql::admins_filler::fill_admins_sql::fill_admins_sql;
 use crate::mysql::establish_connection::establish_connection;
 use crate::mysql::refresh_pool_connection::refresh_pool_connection;
-use crate::mysql::token_worker::token_worker::token_worker;
 use crate::routers::crm::admin_actions_crm::admin_actions_crm;
 use crate::routers::crm::login_actions_crm::login_actions_crm;
 use crate::routers::crm::logs_actions_crm::logs_actions_crm;
@@ -16,10 +12,7 @@ use crate::routers::ugo_vape::ugo_vape_crm::ugo_vape_crm;
 use crate::routers::ugo_vape::ugo_vape_web::ugo_vape_web;
 use crate::routers::walgreen::walgreen_crm::walgreen_crm;
 use crate::routers::walgreen::walgreen_web::walgreen_web;
-
 use crate::structs::cors_layer::get_cors_layer;
-use crate::structs::structs::{AdminsData, Token};
-use crate::walgreen_bot_server::bot_initializer::bot_initializer;
 
 mod mysql;
 mod structs;
@@ -32,24 +25,17 @@ mod walgreen_bot_server;
 #[tokio::main]
 async fn main() {
     let arc_sql = Arc::new(Mutex::new(establish_connection())); // create a shared instance of connection
-    let arc_admins_pool : Arc<RwLock<Vec<AdminsData>>> = Arc::new(RwLock::new(Vec::new())); // Arc is holding actual admins accounts for checks
-    let tokens_pool : Arc<RwLock<Vec<Token>>> = Arc::new(RwLock::new(Vec::new())); // Arc is holding active tokens
-    let telegram_bot : Arc<Mutex<BotInstance>> = Arc::new(Mutex::new(bot_initializer())); // Arc is holding an active instance of telegram bot for sending notifications
-
-    fill_admins_sql(Arc::clone(&arc_sql), Arc::clone(&arc_admins_pool)).await; // fill admins at the boot of the server
 
     refresh_pool_connection(Arc::clone(&arc_sql)); // spawn a refresher for MySQL connection
-    admins_filler(Arc::clone(&arc_sql), Arc::clone(&arc_admins_pool)); // spawn a refresher for Admins Accounts
-    token_worker(Arc::clone(&tokens_pool)); // spawn an active tokens cleaner
 
     let app = Router::new()
-        .merge(ugo_vape_web(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
-        .merge(ugo_vape_crm(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
+        .merge(ugo_vape_web(Arc::clone(&arc_sql)))
+        .merge(ugo_vape_crm(Arc::clone(&arc_sql)))
 
-        .merge(walgreen_web(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
-        .merge(walgreen_crm(Arc::clone(&arc_sql), Arc::clone(&telegram_bot)))
+        .merge(walgreen_web(Arc::clone(&arc_sql)))
+        .merge(walgreen_crm(Arc::clone(&arc_sql)))
 
-        .merge(admin_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool)))
+        .merge(admin_actions_crm(Arc::clone(&arc_sql)))
         .merge(login_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool), Arc::clone(&arc_admins_pool)))
         .merge(logs_actions_crm(Arc::clone(&arc_sql)))
 
