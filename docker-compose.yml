@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   rust-axum-api:
     build: ./ugo-api-axum
     container_name: rust-axum-api
@@ -9,20 +10,39 @@ services:
       - DEPLOY_PORT=8000
       - FILE_LOCATION=mysql.txt
       - BOT_TOKEN_LOCATION=bot_token.txt
-      - TELEGRAM_API_PORT=8001
+      - AUTH_EXPRESS_API_PORT-8001
+      - TG_EXPRESS_API_PORT=8002
+      - TOKEN_EXPRESS_API_PORT=8003
     networks:
       - docker-rust-network
-  rust-axum-tg:
-    build: ./tg-axum
-    container_name: rust-axum-tg
+
+  auth-express-api:
+    build: ./auth-express-api
+    container_name: auth-express-api
     restart: unless-stopped
     environment:
-      - SESSION_DURATION=900
       - DEPLOY_PORT=8001
-      - FILE_LOCATION=mysql.txt
-      - BOT_TOKEN_LOCATION=bot_token.txt
     networks:
       - docker-rust-network
+
+  tg-express-api:
+    build: ./tg-express-api
+    container_name: tg-express-api
+    restart: unless-stopped
+    environment:
+      - DEPLOY_PORT=8002
+    networks:
+      - docker-rust-network
+
+  token-express-api:
+    build: ./token-express-api
+    container_name: token-express-api
+    restart: unless-stopped
+    environment:
+      - DEPLOY_PORT=8003
+    networks:
+      - docker-rust-network
+
   rust-axum-nginx:
     build: ./nginx
     container_name: rust-axum-nginx
@@ -31,9 +51,12 @@ services:
       - "80:80"
     depends_on:
       - rust-axum-api
-      - rust-axum-tg
+      - auth-express-api
+      - tg-express-api
+      - token-express-api
     networks:
       - docker-rust-network
+
 networks:
   docker-rust-network:
     driver: bridge

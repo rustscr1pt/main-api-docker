@@ -38,7 +38,7 @@ pub fn BOT_TOKEN_LOCATION() -> String {
     return String::from(env::var("BOT_TOKEN_LOCATION").unwrap())
 }
 
-pub fn TELEGRAM_API_PORT() -> String {
+pub fn TG_EXPRESS_API_PORT() -> String {
     return String::from(env::var("TELEGRAM_API_PORT").unwrap())
 }
 

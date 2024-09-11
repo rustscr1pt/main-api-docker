@@ -1,6 +1,6 @@
 use reqwest::{Error, Response};
 use serde_json::json;
-use crate::structs::constants::TELEGRAM_API_PORT;
+use crate::structs::constants::TG_EXPRESS_API_PORT;
 
 pub async fn new_status_notification_ugo(id : u32, new_status : String) -> Result<(), Error> {
     let json_data = json!({
@@ -9,7 +9,7 @@ pub async fn new_status_notification_ugo(id : u32, new_status : String) -> Resul
         "key" : r#"XP{B3edA"s$i4im78u-Jt3BkTBH]%("#
     });
     match reqwest::Client::new()
-        .post(format!("http://rust-axum-tg:{}/telegram/new_status/ugo", TELEGRAM_API_PORT()))
+        .post(format!("http://rust-axum-tg:{}/telegram/new_status/ugo", TG_EXPRESS_API_PORT()))
         .json(&json_data)
         .send()
         .await
