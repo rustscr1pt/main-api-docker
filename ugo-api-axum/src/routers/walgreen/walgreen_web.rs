@@ -2,10 +2,8 @@ use std::sync::Arc;
 use axum::{Extension, Router};
 use axum::routing::post;
 use mysql::PooledConn;
-use rustelebot::types::BotInstance;
 use tokio::sync::Mutex;
 use crate::routers::walgreen::walgreen_web_routes::get_phone_and_name::get_phone_and_name::get_phone_and_name;
-use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 
 // Defined routes are used for actions in the walgreenlogistics.ru website
 

@@ -1,1 +1,0 @@
-pub mod tg_notification_routes;

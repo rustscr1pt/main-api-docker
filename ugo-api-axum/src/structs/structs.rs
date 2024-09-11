@@ -17,7 +17,7 @@ pub struct Token { // Represents one active login token in storage. With timing 
     pub time_remaining : u16
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Message { // An easy answer to show a result of some action
     pub is_succeed: bool,
     pub message : String

@@ -1,3 +1,0 @@
-pub mod new_order_walgreen;
-pub mod get_last_record_sql_walgreen;
-mod format_new_order_message_walgreen;

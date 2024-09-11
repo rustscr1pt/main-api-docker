@@ -42,3 +42,11 @@ pub fn TELEGRAM_API_PORT() -> String {
     return String::from(env::var("TELEGRAM_API_PORT").unwrap())
 }
 
+pub fn AUTH_EXPRESS_API_PORT() -> String {
+    return String::from(env::var("AUTH_EXPRESS_API_PORT").unwrap())
+}
+
+pub fn TOKEN_EXPRESS_API_PORT() -> String {
+    return String::from(env::var("TOKEN_EXPRESS_API_PORT").unwrap())
+}
+

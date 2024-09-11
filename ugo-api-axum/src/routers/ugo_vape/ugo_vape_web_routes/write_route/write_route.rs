@@ -8,7 +8,6 @@ use crate::mysql::check_form_data::check_before_sending;
 use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_order_notification_ugo::write_order_notification_ugo;
 use crate::routers::ugo_vape::ugo_vape_web_routes::write_route::write_route_sql::write_route_sql;
 use crate::structs::enums::CheckFieldsCase;
-use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 use crate::structs::structs::{WriteDataBody, WriteToBaseNewCustomer};
 
 pub async fn write_route(main_actor : Extension<Arc<Mutex<PooledConn>>>, Json(body) : Json<WriteDataBody>) -> impl IntoResponse {

@@ -20,7 +20,6 @@ mod tests;
 mod routers;
 mod generic_replies;
 mod bind_and_serve;
-mod walgreen_bot_server;
 
 #[tokio::main]
 async fn main() {
@@ -36,7 +35,7 @@ async fn main() {
         .merge(walgreen_crm(Arc::clone(&arc_sql)))
 
         .merge(admin_actions_crm(Arc::clone(&arc_sql)))
-        .merge(login_actions_crm(Arc::clone(&arc_sql), Arc::clone(&tokens_pool), Arc::clone(&arc_admins_pool)))
+        .merge(login_actions_crm(Arc::clone(&arc_sql)))
         .merge(logs_actions_crm(Arc::clone(&arc_sql)))
 
         .fallback(reject_unmatched_connection) // If no matches in merged => reject connection

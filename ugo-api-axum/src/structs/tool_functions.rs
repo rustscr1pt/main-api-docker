@@ -1,8 +1,8 @@
 use std::num::ParseIntError;
 use mysql::{Error, PooledConn};
 use mysql::prelude::Queryable;
-use tokio::sync::{MutexGuard, RwLockReadGuard};
-use crate::structs::structs::{BasicPartGetAll, FormattedObject, NoteObjectNotation, Token};
+use tokio::sync::{MutexGuard};
+use crate::structs::structs::{BasicPartGetAll, FormattedObject, NoteObjectNotation};
 
 // Extract u32 from string
 pub fn extract_u32(value : String) -> Result<u32, ParseIntError> {
@@ -70,13 +70,4 @@ pub fn collect_walgreen_notes(unlocked : &mut MutexGuard<PooledConn>, object : &
 
 pub fn release_string_uuid() -> String { // Release a UUID string for placing in React
     return String::from(uuid::Uuid::new_v4())
-}
-
-// check if required token is in the pool and return true / false
-pub fn token_check_before_action(readable_pool : RwLockReadGuard<Vec<Token>>, token : String) -> bool
-{
-    if readable_pool.iter().any(|object| object.token == token) {
-        return true
-    }
-    return false
 }

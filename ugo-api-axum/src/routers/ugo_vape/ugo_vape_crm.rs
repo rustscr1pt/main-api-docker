@@ -2,7 +2,6 @@ use std::sync::Arc;
 use axum::{Extension, Router};
 use axum::routing::post;
 use mysql::PooledConn;
-use rustelebot::types::BotInstance;
 use tokio::sync::Mutex;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::add_note_to_order::add_note_to_order::add_note_to_order;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::change_status_by_id::change_status_by_id::change_status_by_id;
@@ -10,7 +9,6 @@ use crate::routers::ugo_vape::ugo_vape_crm_routes::get_filtered_orders_by_page::
 use crate::routers::ugo_vape::ugo_vape_crm_routes::get_orders_by_page::get_orders_by_page::get_orders_by_page;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::remove_note_from_order::remove_note_from_order::remove_note_from_order;
 use crate::routers::ugo_vape::ugo_vape_crm_routes::remove_order_from_orders::remove_order_from_orders::remove_order_from_orders;
-use crate::structs::extension_structs::SQLAndTelegramWebExtension;
 
 // Defined routes are used for actions with orders from ugo-vape in (__admin-panel)
 
