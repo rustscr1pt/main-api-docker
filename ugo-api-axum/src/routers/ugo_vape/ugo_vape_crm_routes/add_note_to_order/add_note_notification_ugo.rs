@@ -7,7 +7,7 @@ pub async fn add_note_notification_ugo() -> Result<(), Error> {
         "key" : r#"XP{B3edA"s$i4im78u-Jt3BkTBH]%("#
     });
     match reqwest::Client::new()
-        .post(format!("http://rust-axum-tg:{}/telegram/new_note/ugo", TG_EXPRESS_API_PORT()))
+        .post(format!("http://tg-express-api:{}/telegram/new_note/ugo", TG_EXPRESS_API_PORT()))
         .json(&json_data)
         .send()
         .await

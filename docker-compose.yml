@@ -10,14 +10,15 @@ services:
       - DEPLOY_PORT=8000
       - FILE_LOCATION=mysql.txt
       - BOT_TOKEN_LOCATION=bot_token.txt
-      - AUTH_EXPRESS_API_PORT-8001
-      - TG_EXPRESS_API_PORT=8002
+      - AUTH_EXPRESS_API_PORT=8001
+      - TELEGRAM_API_PORT=8002
       - TOKEN_EXPRESS_API_PORT=8003
     networks:
       - docker-rust-network
 
   auth-express-api:
     build: ./auth-express-api
+    command: npm run start
     container_name: auth-express-api
     restart: unless-stopped
     environment:
@@ -27,6 +28,7 @@ services:
 
   tg-express-api:
     build: ./tg-express-api
+    command: npm run start
     container_name: tg-express-api
     restart: unless-stopped
     environment:
@@ -36,6 +38,7 @@ services:
 
   token-express-api:
     build: ./token-express-api
+    command: npm run start
     container_name: token-express-api
     restart: unless-stopped
     environment:

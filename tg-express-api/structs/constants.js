@@ -18,4 +18,13 @@ const mysql_password = () => {
     }
 }
 
-module.exports = {token, mysql_password};
+const api_keygen = () => {
+    try {
+        return fs.readFileSync('key.txt', 'utf8')
+    }
+    catch (err) {
+        return null
+    }
+}
+
+module.exports = {token, mysql_password, api_keygen};

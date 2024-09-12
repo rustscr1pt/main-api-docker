@@ -9,7 +9,7 @@ pub async fn new_status_notification_walgreen(id : u32, new_status : String) -> 
         "key" : r#"XP{B3edA"s$i4im78u-Jt3BkTBH]%("#
     });
     match reqwest::Client::new()
-        .post(format!("http://rust-axum-tg:{}/telegram/new_status/walgreen", TG_EXPRESS_API_PORT()))
+        .post(format!("http://tg-express-api:{}/telegram/new_status/walgreen", TG_EXPRESS_API_PORT()))
         .json(&json_data)
         .send()
         .await
