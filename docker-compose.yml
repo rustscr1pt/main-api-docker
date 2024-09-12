@@ -46,6 +46,14 @@ services:
     networks:
       - docker-rust-network
 
+  token-cleaner-express:
+    build: ./token-cleaner-express
+    command: npm run start
+    container_name: token-cleaner-express
+    restart: unless-stopped
+    networks:
+      - docker-rust-network
+
   rust-axum-nginx:
     build: ./nginx
     container_name: rust-axum-nginx
@@ -57,6 +65,7 @@ services:
       - auth-express-api
       - tg-express-api
       - token-express-api
+      - token-cleaner-express
     networks:
       - docker-rust-network
 
