@@ -5,11 +5,12 @@ services:
     build: ./ugo-api-axum
     container_name: rust-axum-api
     restart: unless-stopped
+    stdin_open: true
     environment:
       - SESSION_DURATION=900
       - DEPLOY_PORT=8000
-      - FILE_LOCATION=mysql.txt
-      - BOT_TOKEN_LOCATION=bot_token.txt
+      - FILE_LOCATION=/usr/local/bin/mysql.txt
+      - BOT_TOKEN_LOCATION=/usr/local/bin/bot_token.txt
       - AUTH_EXPRESS_API_PORT=8001
       - TELEGRAM_API_PORT=8002
       - TOKEN_EXPRESS_API_PORT=8003
