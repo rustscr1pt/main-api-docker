@@ -1,8 +1,12 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 const app = express();
+
 const port = process.env.DEPLOY_PORT || 8004;
+
+app.use(cors()); // Enabled CORS for all origins! Needs fixing before moving to product.
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
