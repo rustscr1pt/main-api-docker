@@ -55,6 +55,16 @@ services:
     networks:
       - docker-rust-network
 
+  images-plugin-express-api:
+    build: ./images-plugin-express-api
+    command: npm run start
+    container_name: images-plugin-express-api
+    environment:
+      - DEPLOY_PORT=8004
+    restart: unless-stopped
+    networks:
+      - docker-rust-network
+
   rust-axum-nginx:
     build: ./nginx
     container_name: rust-axum-nginx
