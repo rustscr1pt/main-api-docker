@@ -9,7 +9,7 @@ function extractButtons(req, res) {
         else {
             let returnable_array = [];
             files.forEach((file_path) => {
-                if (!file_path.includes('.jpg')) {
+                if (!file_path.includes('.webp')) {
                     returnable_array.push(`https://new-api.space/images/${file_path}`)
                 }
             })
