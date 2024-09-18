@@ -4,7 +4,7 @@ const {extractImages} = require("./extract-images/extract-images");
 const {extractButtons} = require("./extract-buttons/extract-buttons");
 const {addImage} = require('./add-image/add-image');
 const {addImages} = require('./add-images/add-images');
-const storage = require('./add-image/multer-storage');
+const storage = require('../structs/multer-storage');
 
 const core_router = express.Router();
 
