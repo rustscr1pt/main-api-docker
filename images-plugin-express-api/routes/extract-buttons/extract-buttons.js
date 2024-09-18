@@ -2,7 +2,7 @@ const fs = require("fs");
 const directoryPath = require("../../structs/constants");
 
 function extractButtons(req, res) {
-    fs.readdir(directoryPath, (err, files) => {
+    fs.readdir(directoryPath.directoryPath, (err, files) => {
         if (err) {
             return res.status(500).json({ error: 'Unable to scan directory' });
         }
