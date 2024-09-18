@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const multer = require('multer');
 const app = express();
 
 const port = process.env.DEPLOY_PORT || 8004;
@@ -12,6 +13,18 @@ app.use(cors()); // Enabled CORS for all origins! Needs fixing before moving to 
 app.use(express.static(path.join(__dirname, 'public')));
 
 const directoryPath = path.join(__dirname, 'public/images');
+
+app.post('/image-plugin/add_image/', multer().single('file'), async function (req, res, next) {
+    try {
+        console.log(req.file);
+    }
+    catch (err) {
+        next(err)
+    }
+    finally {
+        res.status(200).send({response : "Image is added successfully"})
+    }
+});
 
 app.get('/image-plugin/extract_images/', (req, res) => {
     fs.readdir(directoryPath, (err, files) => {
