@@ -1,69 +1,21 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const multer = require('multer');
 const app = express();
+const core_router = require('./routes/core_router');
+const {static_path} = require("./structs/constants");
 
 const port = process.env.DEPLOY_PORT || 8004;
 
-app.use(cors()); // Enabled CORS for all origins! Needs fixing before moving to product.
+// Enabled CORS for all origins! Needs fixing before moving to product.
+app.use(cors());
 
 // Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(static_path);
 
-const directoryPath = path.join(__dirname, 'public/images');
-
-app.post('/image-plugin/add_image/', multer().single('file'), async function (req, res, next) {
-    try {
-        console.log(req.file);
-    }
-    catch (err) {
-        next(err)
-    }
-    finally {
-        res.status(200).send({response : "Image is added successfully"})
-    }
-});
-
-app.get('/image-plugin/extract_images/', (req, res) => {
-    fs.readdir(directoryPath, (err, files) => {
-        if (err) {
-            return res.status(500).json({ error: 'Unable to scan directory' });
-        }
-        else {
-            let returnable_array = [];
-            files.forEach((file_path) => {
-                if (!file_path.includes('.svg')) {
-                    returnable_array.push(`https://new-api.space/images/${file_path}`)
-                }
-            })
-            res.json({
-                extracted : returnable_array
-            });
-        }
-    })
-});
-
-app.get('/image-plugin/extract_buttons/', (req, res) => {
-    fs.readdir(directoryPath, (err, files) => {
-        if (err) {
-            return res.status(500).json({ error: 'Unable to scan directory' });
-        }
-        else {
-            let returnable_array = [];
-            files.forEach((file_path) => {
-                if (!file_path.includes('.jpg')) {
-                    returnable_array.push(`https://new-api.space/images/${file_path}`)
-                }
-            })
-            res.json({
-                extracted : returnable_array
-            });
-        }
-    })
-});
-
+// Add router
+app.use(core_router)
 
 app.listen(port, () => {
     console.log(`Images Plugin Express Api is running at http://localhost:${port}`);
