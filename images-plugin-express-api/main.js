@@ -1,7 +1,5 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
-const multer = require('multer');
 const app = express();
 const core_router = require('./routes/core_router');
 const {static_path} = require("./structs/constants");
