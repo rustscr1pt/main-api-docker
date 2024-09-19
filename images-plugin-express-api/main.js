@@ -3,8 +3,7 @@ const cors = require('cors');
 const app = express();
 const core_router = require('./routes/core_router');
 const {static_path} = require("./structs/constants");
-
-const port = process.env.DEPLOY_PORT || 8004;
+const {port} = require('./structs/constants');
 
 // Enabled CORS for all origins! Needs fixing before moving to product.
 app.use(cors());

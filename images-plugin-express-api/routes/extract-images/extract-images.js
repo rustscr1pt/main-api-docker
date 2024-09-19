@@ -1,5 +1,6 @@
 const fs = require("fs");
 const directoryPath = require("../../structs/constants");
+const {deploy_link} = require("../../structs/constants");
 
 function extractImages(req, res) {
     fs.readdir(directoryPath.directoryPath, (err, files) => {
@@ -10,7 +11,7 @@ function extractImages(req, res) {
             let returnable_array = [];
             files.forEach((file_path) => {
                 if (!file_path.includes('.svg')) {
-                    returnable_array.push(`https://new-api.space/images/${file_path}`)
+                    returnable_array.push(`${deploy_link}/images/${file_path}`)
                 }
             })
             res.json({

@@ -61,6 +61,7 @@ services:
     container_name: images-plugin-express-api
     environment:
       - DEPLOY_PORT=8004
+      - DEPLOY_LINK=https://trustedapi.space
     restart: unless-stopped
     networks:
       - docker-rust-network
