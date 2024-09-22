@@ -5,8 +5,8 @@ const core_router = require('./routes/core_router');
 const {static_path} = require("./structs/constants");
 const {port} = require('./structs/constants');
 
-// Enabled CORS for all origins! Needs fixing before moving to product.
-app.use(cors());
+// // Enabled CORS for all origins! Needs fixing before moving to product.
+// app.use(cors());
 
 app.use(express.json());
 
