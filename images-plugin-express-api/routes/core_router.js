@@ -5,6 +5,7 @@ const {extractButtons} = require("./extract-buttons/extract-buttons");
 const {addImage} = require('./add-image/add-image');
 const {addImages} = require('./add-images/add-images');
 const storage = require('../structs/multer-storage');
+const {deleteImage} = require("./delete-image/delete-image");
 
 const core_router = express.Router();
 
@@ -22,6 +23,9 @@ core_router
     })
     .post('/image-plugin/add_images', upload.array('files', 10), async function (req, res) {
         addImages(req, res)
+    })
+    .post('/image-plugin/delete_image', (req, res) => {
+        deleteImage(req, res)
     })
 
 module.exports = core_router

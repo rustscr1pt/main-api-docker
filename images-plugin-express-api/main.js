@@ -8,6 +8,8 @@ const {port} = require('./structs/constants');
 // Enabled CORS for all origins! Needs fixing before moving to product.
 app.use(cors());
 
+app.use(express.json());
+
 // Serve static files from the "public" directory
 app.use(static_path);
 
