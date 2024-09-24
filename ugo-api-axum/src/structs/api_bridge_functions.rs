@@ -15,7 +15,9 @@ pub async fn check_if_authorized(login : &String, password : &String) -> bool {
         .await
     {
         Ok(response) => {
-            let json : Message = response.json().await.unwrap();
+            let middle_result = response.json().await;
+            println!("{:?}", middle_result);
+            let json : Message = middle_result.unwrap();
             match json.is_succeed {
                 true => {return true}
                 false => {return false}
@@ -39,7 +41,9 @@ pub async fn check_for_token(token : &String) -> bool {
         .await
     {
         Ok(response) => {
-            let json : Message = response.json().await.unwrap();
+            let middle_result = response.json().await;
+            println!("{:?}", middle_result);
+            let json : Message = middle_result.unwrap();
             match json.is_succeed {
                 true => {return true}
                 false => {return false}
@@ -63,7 +67,9 @@ pub async fn add_token_to_db(token : &String) -> bool {
         .await
     {
         Ok(response) => {
-            let json : Message = response.json().await.unwrap();
+            let middle_result = response.json().await;
+            println!("{:?}", middle_result);
+            let json : Message = middle_result.unwrap();
             match json.is_succeed {
                 true => {return true}
                 false => {return false}
