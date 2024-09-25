@@ -14,8 +14,7 @@ function authenticate_sql(login, password, res, mysqlConnection) {
         else {
             res.send(reply_with_message(false, err))
         }
-        }
-        )
+    })
 }
 
 module.exports = {authenticate_sql}

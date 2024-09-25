@@ -15,8 +15,8 @@ pub async fn check_if_authorized(login : &String, password : &String) -> bool {
         .await
     {
         Ok(response) => {
+            println!("{:?}", response);
             let middle_result = response.json().await;
-            println!("{:?}", middle_result);
             let json : Message = middle_result.unwrap();
             match json.is_succeed {
                 true => {return true}
