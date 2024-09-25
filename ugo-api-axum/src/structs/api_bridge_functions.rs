@@ -41,6 +41,7 @@ pub async fn check_for_token(token : &String) -> bool {
         .await
     {
         Ok(response) => {
+            println!("{:?}", response);
             let middle_result = response.json().await;
             println!("{:?}", middle_result);
             let json : Message = middle_result.unwrap();
@@ -67,8 +68,8 @@ pub async fn add_token_to_db(token : &String) -> bool {
         .await
     {
         Ok(response) => {
+            println!("{:?}", response);
             let middle_result = response.json().await;
-            println!("{:?}", middle_result);
             let json : Message = middle_result.unwrap();
             match json.is_succeed {
                 true => {return true}

@@ -12,7 +12,10 @@ pub async fn write_order_notification_walgreen() -> Result<(), Error> {
         .send()
         .await
     {
-        Ok(_) => {return Ok(())}
+        Ok(response) => {
+            println!("{:?}", response);
+            return Ok(())
+        }
         Err(err) => {return Err(err)}
     }
 }
