@@ -7,7 +7,7 @@ function new_status_walgreen_runtime(body, res, mysqlConnection, tgBot) {
         fetch_new_status_walgreen_sql(res, mysqlConnection, tgBot, body)
     }
     else {
-        res.send(reply_with_message(false, "Wrong keygen! Please pick another one."))
+        res.json(reply_with_message(false, "Wrong keygen! Please pick another one."))
     }
 }
 

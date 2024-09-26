@@ -5,14 +5,14 @@ function authenticate_sql(login, password, res, mysqlConnection) {
         (err, results, _) => {
         if (!err) {
             if (results.length === 0) {
-                res.send(reply_with_message(false, "Couldn't find your account in the db"))
+                res.json(reply_with_message(false, "Couldn't find your account in the db"))
             }
             else {
-                res.send(reply_with_message(true, "Successfully authenticated"))
+                res.json(reply_with_message(true, "Successfully authenticated"))
             }
         }
         else {
-            res.send(reply_with_message(false, err))
+            res.json(reply_with_message(false, err))
         }
     })
 }

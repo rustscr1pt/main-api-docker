@@ -8,7 +8,7 @@ function new_note_ugo_runtime(body, res, mysqlConnection, tgBot) {
         get_last_note_sql_ugo(res, mysqlConnection, tgBot)
     }
     else {
-        res.send(reply_with_message(false, "Wrong keygen! Please pick another one."))
+        res.json(reply_with_message(false, "Wrong keygen! Please pick another one."))
     }
 }
 

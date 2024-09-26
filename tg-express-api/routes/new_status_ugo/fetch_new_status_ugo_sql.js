@@ -9,15 +9,15 @@ function fetch_new_status_ugo_sql(res, mysqlConnection, tgBot, body) {
         (err, results, _) => {
             if (!err) {
                 if (results.length === 0) {
-                    res.send(reply_with_message(false, "Couldn't get a recently changed status -> /telegram/new_status/ugo/"))
+                    res.json(reply_with_message(false, "Couldn't get a recently changed status -> /telegram/new_status/ugo/"))
                 }
                 else {
                     botSendMessage(tgBot, format_new_status_message_ugo(results[0], body.new_status));
-                    res.send(reply_with_message(true, "Notification has been sent"))
+                    res.json(reply_with_message(true, "Notification has been sent"))
                 }
             }
             else {
-                reply_with_message(false, err)
+                res.json(reply_with_message(false, err))
             }
         }
     )

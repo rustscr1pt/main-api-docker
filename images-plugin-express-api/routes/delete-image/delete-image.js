@@ -7,7 +7,7 @@ function deleteImage(req, res) {
         const extracted_filename = request_body.file_to_delete.split('/').pop();
         const filepath = directoryPath.directoryPath + "/" + extracted_filename;
         fs.unlinkSync(filepath);
-        res.status(200).send({ response: `Image with name ${extracted_filename} is successfully deleted`});
+        res.status(200).json({ response: `Image with name ${extracted_filename} is successfully deleted`});
     }
     catch (err) {
         console.log(err);

@@ -5,7 +5,7 @@ const {add_token_sql} = require("./add_token_sql");
 // struct body { token : string }
 function add_token_runtime(body, res, mysqlConnection) {
     if (body.token.length === 0) {
-        res.send(reply_with_message(false, "Token must contain more than 1 symbol."))
+        res.json(reply_with_message(false, "Token must contain more than 1 symbol."))
     }
     else {
         add_token_sql(body.token, res, mysqlConnection)

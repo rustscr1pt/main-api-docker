@@ -1,11 +1,11 @@
 function addImages(req, res) {
     try {
         console.log(req.files); // Log the array of uploaded files
-        res.status(200).send({ response: "Images are added successfully" });
+        res.status(200).json({ response: "Images are added successfully" });
     }
     catch (err) {
         console.log(err);
-        res.status(500).send({ response: `Error! ${err.message}` });
+        res.status(500).json({ response: `Error! ${err.message}` });
     }
 }
 

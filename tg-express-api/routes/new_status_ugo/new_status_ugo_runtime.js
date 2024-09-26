@@ -7,7 +7,7 @@ function new_status_ugo_runtime(body, res, mysqlConnection, tgBot) {
         fetch_new_status_ugo_sql(res, mysqlConnection, tgBot, body)
     }
     else {
-        res.send(reply_with_message(false, "Wrong keygen! Please pick another one."))
+        res.json(reply_with_message(false, "Wrong keygen! Please pick another one."))
     }
 }
 

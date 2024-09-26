@@ -9,15 +9,15 @@ function get_last_note_sql_ugo(res, mysqlConnection, tgBot) {
         (err, results, _) => {
             if (!err)  {
                 if (results.length === 0) {
-                    res.send(reply_with_message(false, "Couldn't get a recently added note -> /telegram/new_note/ugo/"))
+                    res.json(reply_with_message(false, "Couldn't get a recently added note -> /telegram/new_note/ugo/"))
                 }
                 else {
                     botSendMessage(tgBot, format_new_note_message_ugo(results[0]));
-                    res.send(reply_with_message(true, "Notification has been sent"))
+                    res.json(reply_with_message(true, "Notification has been sent"))
                 }
             }
             else {
-                res.send(reply_with_message(false, err))
+                res.json(reply_with_message(false, err))
             }
         }
     )
