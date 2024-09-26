@@ -38,8 +38,8 @@ async fn main() {
         .merge(login_actions_crm(Arc::clone(&arc_sql)))
         .merge(logs_actions_crm(Arc::clone(&arc_sql)))
 
-        .fallback(reject_unmatched_connection) // If no matches in merged => reject connection
-        .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
+        .fallback(reject_unmatched_connection); // If no matches in merged => reject connection
+//        .layer(get_cors_layer()); // Set up allowed methods + allowed-origins
 
     match tokio_bindings().await {
         Ok(addr) => {
