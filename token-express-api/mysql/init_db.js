@@ -8,7 +8,9 @@ const mysqlConnection = mysql.createPool({
     database: "default_db",
     password: mysql_password(),
     waitForConnections: true,
-    connectionLimit: 10
+    connectionLimit: 10,
+    enableKeepAlive : true,
+    keepAliveInitialDelay : 300000
 });
 
 mysqlConnection.connect((err) => {
