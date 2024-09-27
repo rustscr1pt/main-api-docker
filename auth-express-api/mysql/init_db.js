@@ -13,12 +13,13 @@ const mysqlConnection = mysql.createPool({
     keepAliveInitialDelay : 300000
 });
 
-mysqlConnection.connect((err) => {
-    if (!err) {
-        console.log('Connected to mysql db.')
+mysqlConnection.getConnection((err, connection) => {
+    if (err) {
+        console.log(`Connection to the db failed.\n${err}`);
     }
     else {
-        console.log(`Connection to the db failed.\n${err}`)
+        console.log('Connected to MySQL db.');
+        connection.release(); // Release the connection back to the pool
     }
 })
 
