@@ -10,6 +10,7 @@ const deploy_link = process.env.DEPLOY_LINK || 'https://trustedapi.space';
 const allowed_origins = ['https://ugo-vape.ru', "http://ugo-vape.ru"];
 const cors_configuration = {
     origin : function(origin, callback) {
+        console.log(`logged origin ${origin}`);
         if (allowed_origins.indexOf(origin) !== -1) {
             callback(null, true)
         }
