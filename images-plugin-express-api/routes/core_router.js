@@ -23,10 +23,10 @@ core_router
     .post('/image-plugin/add_image/', cors(cors_configuration), upload.single('file'), async function (req, res) {
         addImage(req, res)
     })
-    .post('/image-plugin/add_images', cors(cors_configuration), upload.array('files', 10), async function (req, res) {
+    .post('/image-plugin/add_images/', cors(cors_configuration), upload.array('files', 10), async function (req, res) {
         addImages(req, res)
     })
-    .post('/image-plugin/delete_image', cors(cors_configuration), (req, res) => {
+    .post('/image-plugin/delete_image/', cors(cors_configuration), (req, res) => {
         deleteImage(req, res)
     })
 
