@@ -20,7 +20,7 @@ core_router
     .get('/image-plugin/extract_images/', (req, res) => {
         extractImages(req, res)
     })
-    .get('image-plugin/extract_sizes', (req, res) => {
+    .get('/image-plugin/extract_sizes/', (req, res) => {
         extractSizes(req, res)
     })
     .get('/image-plugin/extract_buttons/', (req, res) => {
