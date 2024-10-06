@@ -8,6 +8,7 @@ const {addImages} = require('./add-images/add-images');
 const storage = require('../structs/multer-storage');
 const {deleteImage} = require("./delete-image/delete-image");
 const {cors_configuration} = require("../structs/constants");
+const {extractSizes} = require("./extract-sizes/extract-sizes");
 
 const core_router = express.Router();
 
@@ -18,6 +19,9 @@ core_router.use(cors(cors_configuration)); // Apply cors politics to all routes
 core_router
     .get('/image-plugin/extract_images/', (req, res) => {
         extractImages(req, res)
+    })
+    .get('image-plugin/extract_sizes', (req, res) => {
+        extractSizes(req, res)
     })
     .get('/image-plugin/extract_buttons/', (req, res) => {
         extractButtons(req, res)
