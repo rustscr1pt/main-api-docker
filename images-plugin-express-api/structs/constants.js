@@ -7,7 +7,13 @@ const static_path = express.static(path.join(__dirname, '../public'));
 const port = process.env.DEPLOY_PORT || 8004;
 const deploy_link = process.env.DEPLOY_LINK || 'https://trustedapi.space';
 
-const allowed_origins = ['https://ugo-vape.ru', "http://ugo-vape.ru"];
+const allowed_origins =
+    [
+        'https://ugo-vape.ru',
+        "http://ugo-vape.ru",
+        'https://www.ugo-vape.ru',
+        'http://www.ugo-vape.ru'
+    ];
 const cors_configuration = {
     origin : function(origin, callback) {
         console.log(`logged origin ${origin}`);
