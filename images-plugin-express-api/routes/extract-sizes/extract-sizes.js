@@ -1,5 +1,6 @@
 const fs = require("fs");
 const directoryPath = require("../../structs/constants");
+const {groupSizeData} = require("./group-size-data");
 
 function extractSizes(req, res) {
     fs.readdir(directoryPath.directoryPath, (err, files) => {
@@ -10,9 +11,8 @@ function extractSizes(req, res) {
             let returnable_array = [];
             files.forEach((file_path) => {
                 if (!file_path.includes('.svg')) {
-                    const {size} = fs.statSync(`${directoryPath.directoryPath}/${file_path}`);
-                    const rounded_size = Math.round(size / 1000);
-                    returnable_array.push(`${rounded_size} kb`)
+                    const filePath = `${directoryPath.directoryPath}/${file_path}`;
+                    returnable_array.push(groupSizeData(filePath));
                 }
             })
             res.json({
