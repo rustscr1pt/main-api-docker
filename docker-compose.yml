@@ -26,6 +26,11 @@ services:
       - DEPLOY_PORT=8001
     networks:
       - docker-rust-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:${DEPLOY_PORT}/is_available/ || exit 1" ]
+      interval: 10m
+      timeout: 10s
+      retries: 3
 
   tg-express-api:
     build: ./tg-express-api
@@ -36,6 +41,11 @@ services:
       - DEPLOY_PORT=8002
     networks:
       - docker-rust-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:${DEPLOY_PORT}/is_available/ || exit 1" ]
+      interval: 10m
+      timeout: 10s
+      retries: 3
 
   token-express-api:
     build: ./token-express-api
@@ -46,6 +56,11 @@ services:
       - DEPLOY_PORT=8003
     networks:
       - docker-rust-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:${DEPLOY_PORT}/is_available/ || exit 1" ]
+      interval: 10m
+      timeout: 10s
+      retries: 3
 
   token-cleaner-express:
     build: ./token-cleaner-express
@@ -65,6 +80,11 @@ services:
     restart: unless-stopped
     networks:
       - docker-rust-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:${DEPLOY_PORT}/is_available/ || exit 1" ]
+      interval: 10m
+      timeout: 10s
+      retries: 3
 
   rust-axum-nginx:
     build: ./nginx
