@@ -35,5 +35,8 @@ core_router
     .post('/image-plugin/delete_image/', (req, res) => {
         deleteImage(req, res)
     })
+    .get('/is_available/', (req, res) => {
+        res.status(200).send("OK")
+    })
 
 module.exports = core_router
