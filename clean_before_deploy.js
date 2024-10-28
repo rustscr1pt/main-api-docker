@@ -34,8 +34,18 @@ function removeNodeModules(dirPath) {
 }
 
 function clean_rust_modules() {
-
+    const command = "cargo clean-recursive";
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing command : ${error}`)
+        }
+        if (stderr) {
+            console.error(`Error output : ${stderr}`)
+        }
+        console.log(`Successfully cleaned up rust modules.\n${stdout}`)
+    })
 }
 
 const directoryPath = path.join(__dirname);
 removeNodeModules(directoryPath);
+clean_rust_modules();
