@@ -19,7 +19,7 @@ function remove_node_modules(dirPath) {
                     if (file === 'node_modules') {
                         fs.rmdir(filePath, { recursive: true }, (err) => {
                             if (err) {
-                                return console.error("Error removing node_modules: " + err);
+                                return console.error(`Error removing node_modules: ${err}`);
                             }
                             console.log(`Removed directory: ${filePath}`);
                         });
