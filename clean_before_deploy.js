@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const {exec} = require('child_process');
 
-function removeNodeModules(dirPath) {
+function remove_node_modules(dirPath) {
     fs.readdir(dirPath, (err, files) => {
         if (err) {
             return console.error("Unable to scan directory: " + err);
@@ -25,7 +25,7 @@ function removeNodeModules(dirPath) {
                         });
                     }
                     else {
-                        removeNodeModules(filePath);
+                        remove_node_modules(filePath);
                     }
                 }
             });
@@ -47,5 +47,5 @@ function clean_rust_modules() {
 }
 
 const directoryPath = path.join(__dirname);
-removeNodeModules(directoryPath);
+remove_node_modules(directoryPath);
 clean_rust_modules();
