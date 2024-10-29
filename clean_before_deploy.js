@@ -5,7 +5,7 @@ const {exec} = require('child_process');
 function remove_node_modules(dirPath) {
     fs.readdir(dirPath, (err, files) => {
         if (err) {
-            return console.error("Unable to scan directory: " + err);
+            return console.error(`Unable to scan directory: ${err}`);
         }
         files.forEach(file => {
             const filePath = path.join(dirPath, file);
