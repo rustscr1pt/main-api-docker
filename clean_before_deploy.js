@@ -12,7 +12,7 @@ function remove_node_modules(dirPath) {
 
             fs.stat(filePath, (err, stats) => {
                 if (err) {
-                    return console.error("Unable to retrieve file stats: " + err);
+                    return console.error(`Unable to retrieve file stats: ${err}`);
                 }
                 if (stats.isDirectory()) {
                     console.log("Directory:", file);
