@@ -34,6 +34,7 @@ function remove_node_modules(dirPath) {
     });
 }
 
+// run cargo clean-recursive for cleaning rust projects
 function clean_rust_modules() {
     const command = "cargo clean-recursive";
     exec(command, (error, stdout, stderr) => {
