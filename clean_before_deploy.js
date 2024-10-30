@@ -48,10 +48,10 @@ function clean_rust_modules() {
     })
 }
 
-function run_cleaning() {
+function run_cleaning_process() {
     const directoryPath = path.join(__dirname);
     remove_node_modules(directoryPath);
     clean_rust_modules();
 }
 
-run_cleaning();
+run_cleaning_process();
