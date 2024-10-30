@@ -30,9 +30,6 @@ core_router
     })
     .post('/telegram/new_status/walgreen/', (req, res) => {
         new_status_walgreen_runtime(req.body, res, mysqlConnection, tgBot)
-    })
-    .get('/is_available/', (req, res) => {
-        res.status(200).send("OK")
-    })
+    });
 
 module.exports = core_router;
