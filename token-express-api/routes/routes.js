@@ -11,9 +11,6 @@ routes
     })
     .post('/tokens/check/', (req, res) => {
         check_token_runtime(req.body, res, mysqlConnection)
-    })
-    .get('/is_available/', (req, res) => {
-        res.status(200).send("OK")
-    })
+    });
 
 module.exports = routes;
