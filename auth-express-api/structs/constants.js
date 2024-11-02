@@ -1,7 +1,8 @@
 const fs = require('node:fs');
 const mysql_password = () => {
     try {
-        return fs.readFileSync('password.txt', 'utf8')
+        const json = JSON.parse(fs.readFileSync('config.json', 'utf8'))
+        return json.password
     }
     catch (err) {
         return null
