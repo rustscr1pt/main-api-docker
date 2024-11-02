@@ -1,8 +1,18 @@
 const fs = require('node:fs');
 
+function readConfig(propertyName) {
+    try {
+        const result = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+        return result[propertyName]
+    }
+    catch (err) {
+        return null
+    }
+}
+
 const token = () => {
     try {
-        return fs.readFileSync('token.txt', 'utf8')
+        return readConfig('token')
     }
     catch (err) {
         return null
@@ -11,7 +21,7 @@ const token = () => {
 
 const mysql_password = () => {
     try {
-        return fs.readFileSync('password.txt', 'utf8')
+        return readConfig('password')
     }
     catch (err) {
         return null
@@ -20,7 +30,7 @@ const mysql_password = () => {
 
 const api_keygen = () => {
     try {
-        return fs.readFileSync('key.txt', 'utf8')
+        return readConfig('key')
     }
     catch (err) {
         return null

@@ -1,4 +1,2 @@
 /node_modules
-/password.txt
-/token.txt
-/key.txt
+/config.json
