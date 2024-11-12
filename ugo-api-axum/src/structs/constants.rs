@@ -37,18 +37,6 @@ pub fn FILE_LOCATION() -> String {
     }
 }
 
-pub fn BOT_TOKEN_LOCATION() -> String {
-    match env::var("BOT_TOKEN_LOCATION") {
-        Ok(bot_token_location) => {
-            return String::from(bot_token_location)
-        }
-        Err(err) => {
-            println!("BOT_TOKEN_LOCATION => {}", err);
-            return String::from("bot_token.txt")
-        }
-    }
-}
-
 pub fn TG_EXPRESS_API_PORT() -> String {
     match env::var("TELEGRAM_API_PORT") {
         Ok(telegram_api_port) => {
