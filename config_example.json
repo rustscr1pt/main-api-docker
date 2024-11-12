@@ -1,5 +1,6 @@
 {
   "password" : "STRING Password from MySQL",
   "key" : "API KEY",
-  "token" : "STRING TOKEN FROM TG BOT"
+  "token" : "STRING TOKEN FROM TG BOT",
+  "api_axum_sql" : "STRING full url for connecting to mySQL db"
 }
