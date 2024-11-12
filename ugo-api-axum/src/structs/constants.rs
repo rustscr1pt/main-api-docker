@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::File;
 use std::io::BufReader;
-use serde_json::Error;
 use crate::structs::structs::ConfigMySQLJSON;
 
 // pub const SESSION_DURATION : u16 = 900; // duration of session after login in seconds
@@ -32,7 +31,7 @@ pub fn DEPLOY_PORT() -> u16 {
 pub fn FILE_LOCATION() -> String {
     match env::var("FILE_LOCATION") {
         Ok(file_location) => {
-            return String::from(file_location)
+            return file_location
         }
         Err(err) => {
             println!("FILE_LOCATION => {}", err);
@@ -41,22 +40,11 @@ pub fn FILE_LOCATION() -> String {
     }
 }
 
-pub fn read_mysql_configuration_json(file_location : String) -> String {
-    match File::open(file_location) {
-        Ok(file) => {
-            let reader = BufReader::new(file);
-            let sql_connection : Result<ConfigMySQLJSON, Error> = serde_json::from_reader(reader);
-            match sql_connection {
-                Ok(config) => {
-                    return config.api_axum_sql
-                }
-                Err(err) => {
-
-                }
-            }
-        }
-        Err(err) => {}
-    }
+pub fn read_mysql_configuration_json(file_location : String) -> Result<String, Box<dyn std::error::Error>> {
+    let file = File::open(file_location)?;
+    let reader = BufReader::new(file);
+    let config: ConfigMySQLJSON = serde_json::from_reader(reader)?;
+    Ok(config.api_axum_sql)
 }
 
 pub fn TG_EXPRESS_API_PORT() -> String {
