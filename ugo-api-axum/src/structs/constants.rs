@@ -5,43 +5,6 @@ use std::env;
 // pub const DEPLOY_PORT : u16 = 8000; // local port to deploy an API
 pub const STANDARD_IP : &'static str = "0.0.0.0"; // standard IP for deploying
 
-// /Users/egorivanov/Desktop/mysql.txt - MacOS
-// C:\Users\User\Desktop\mysql.txt - Windows
-// mysql.txt - Linux
-// pub const FILE_LOCATION : &'static str = r#"/Users/egorivanov/Desktop/mysql.txt"#;
-
-// /Users/egorivanov/Desktop/bot_token.txt - MacOS
-// C:\Users\User\Desktop\bot_token.txt - Windows
-// bot_token.txt - Linux
-//pub const BOT_TOKEN_LOCATION : &'static str = r#"/Users/egorivanov/Desktop/bot_token.txt"#;
-
-// https://ugo-vape.ru
-// http://localhost:8000
-// http://localhost:3000
-// Replace cors route here! + check if there is a "/" at the end of URL, it shouldn't be there!
-
-pub const BOT_CHAT_ID : &'static str = "-1002156530519";
-
-// pub fn SESSION_DURATION() -> u16 {
-//     match env::var("SESSION_DURATION") {
-//         Ok(session_duration) => {
-//             match session_duration.parse::<u16>() {
-//                 Ok(session_duration) => {
-//                     return session_duration
-//                 }
-//                 Err(err) => {
-//                     println!("{}", err);
-//                     return 900
-//                 }
-//             }
-//         }
-//         Err(err) => {
-//             println!("SESSION_DURATION => {}", err);
-//             return 900
-//         }
-//     }
-// }
-
 pub fn DEPLOY_PORT() -> u16 {
     match env::var("DEPLOY_PORT") {
         Ok(deploy_port) => {

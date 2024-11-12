@@ -1,2 +1,3 @@
 *.txt
 ugo-api-axum/target/
+ugo-api-axum/*.json
