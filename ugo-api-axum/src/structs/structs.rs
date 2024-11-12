@@ -196,3 +196,12 @@ pub struct SingleLogObject {
 pub struct TelegramRequest {
     pub key : String
 }
+
+
+#[derive(Debug, Deserialize)]
+pub struct ConfigMySQLJSON {
+    pub password : String,
+    pub key : String,
+    pub token : String,
+    pub api_axum_sql: String
+}

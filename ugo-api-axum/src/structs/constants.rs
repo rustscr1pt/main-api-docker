@@ -1,4 +1,8 @@
 use std::env;
+use std::fs::File;
+use std::io::BufReader;
+use serde_json::Error;
+use crate::structs::structs::ConfigMySQLJSON;
 
 // pub const SESSION_DURATION : u16 = 900; // duration of session after login in seconds
 
@@ -32,8 +36,26 @@ pub fn FILE_LOCATION() -> String {
         }
         Err(err) => {
             println!("FILE_LOCATION => {}", err);
-            return String::from("mysql.txt")
+            return String::from("config.json")
         }
+    }
+}
+
+pub fn read_mysql_configuration_json(file_location : String) -> String {
+    match File::open(file_location) {
+        Ok(file) => {
+            let reader = BufReader::new(file);
+            let sql_connection : Result<ConfigMySQLJSON, Error> = serde_json::from_reader(reader);
+            match sql_connection {
+                Ok(config) => {
+                    return config.api_axum_sql
+                }
+                Err(err) => {
+
+                }
+            }
+        }
+        Err(err) => {}
     }
 }
 
