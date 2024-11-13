@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 
 const port = process.env.DEPLOY_PORT || 8002;
 
+// Route for keeping the module alive
 app.get('/health/', (req, res) => {
     res.status(200).send('OK');
 });
