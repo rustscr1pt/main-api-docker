@@ -1,10 +1,9 @@
-use std::fs;
 use std::sync::Arc;
 use std::time::Duration;
 use mysql::{Pool, PooledConn};
 use tokio::sync::Mutex;
 use tokio::time::sleep;
-use crate::structs::constants::FILE_LOCATION;
+use crate::structs::constants::{FILE_LOCATION, read_mysql_configuration_json};
 
 
 // refresh pool with db connection every 1 minute
