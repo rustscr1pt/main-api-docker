@@ -15,9 +15,9 @@ pub fn refresh_pool_connection(to_refresh : Arc<Mutex<PooledConn>>) -> () {
             if timer == 0 {
                 let pool =
                     Pool::new(
-                        fs::read_to_string(FILE_LOCATION())
-                            .unwrap()
-                            .trim()
+                        read_mysql_configuration_json(FILE_LOCATION())
+                            .expect("Couldn't read_mysql_configuration_json")
+                            .as_str()
                     )
                         .expect("Couldn't connect to a base")
                         .get_conn()
