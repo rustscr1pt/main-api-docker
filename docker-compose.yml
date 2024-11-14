@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
 
   rust-axum-api:
@@ -71,6 +71,12 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     depends_on:
       - rust-axum-api
       - auth-express-api
