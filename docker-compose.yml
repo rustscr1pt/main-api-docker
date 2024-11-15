@@ -75,12 +75,6 @@ services:
     volumes:
       - /etc/letsencrypt/live/trustedapi.space/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro
       - /etc/letsencrypt/live/trustedapi.space/privkey.pem:/etc/ssl/private/privkey.pem:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "-v", "http://localhost"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
     depends_on:
       - rust-axum-api
       - auth-express-api
