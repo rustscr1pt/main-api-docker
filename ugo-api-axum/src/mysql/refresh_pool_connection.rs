@@ -1,37 +1,56 @@
 use std::sync::Arc;
-use std::time::Duration;
-use mysql::{Pool, PooledConn};
 use tokio::sync::Mutex;
-use tokio::time::sleep;
+use mysql::{Pool, PooledConn};
+use tokio::time::{sleep, Duration};
 use crate::structs::constants::{FILE_LOCATION, read_mysql_configuration_json};
+use chrono::Local;
 
-
-// refresh pool with db connection every 1 minute
-pub fn refresh_pool_connection(to_refresh : Arc<Mutex<PooledConn>>) -> () {
+pub fn refresh_pool_connection(to_refresh: Arc<Mutex<PooledConn>>) {
     tokio::spawn(async move {
-        let mut timer : u8 = 60;
+        let mut timer = 60;
+
         loop {
             if timer == 0 {
-                let pool =
-                    Pool::new(
-                        read_mysql_configuration_json(FILE_LOCATION())
-                            .expect("Couldn't read_mysql_configuration_json")
-                            .as_str()
-                    )
-                        .expect("Couldn't connect to a base")
-                        .get_conn()
-                        .unwrap();
-                let mut unlocked = to_refresh.lock().await;
-                *unlocked = pool;
-                drop(unlocked);
-                println!("Connection with MySQL pool is refreshed");
-                timer = 60;
-            }
-            else {
+                match refresh_connection(&to_refresh).await {
+                    Ok(_) => {
+                        println!(
+                            "[{}] MySQL connection refreshed successfully.",
+                            Local::now().format("%Y-%m-%d %H:%M:%S")
+                        );
+                        timer = 60; // Reset the timer on success
+                    }
+                    Err(e) => {
+                        println!(
+                            "[{}] Failed to refresh MySQL connection: {:?}",
+                            Local::now().format("%Y-%m-%d %H:%M:%S"),
+                            e
+                        );
+                        timer = 10; // Retry sooner in case of failure
+                    }
+                }
+            } else {
+                println!(
+                    "[{}] {} seconds estimated till MySQL connection is refreshed.",
+                    Local::now().format("%Y-%m-%d %H:%M:%S"),
+                    timer
+                );
                 sleep(Duration::from_secs(1)).await;
                 timer -= 1;
-                println!("{} seconds estimated till MySQL pool is refreshed.", timer);
             }
         }
     });
+}
+
+async fn refresh_connection(to_refresh: &Arc<Mutex<PooledConn>>) -> Result<(), Box<dyn std::error::Error>> {
+    let config_str = read_mysql_configuration_json(FILE_LOCATION())
+        .map_err(|e| format!("Failed to read MySQL configuration: {:?}", e))?;
+
+    let pool = Pool::new(config_str.as_str())
+        .map_err(|e| format!("Failed to create MySQL pool: {:?}", e))?;
+
+    let mut lock = to_refresh.lock().await;
+    *lock = pool.get_conn()
+        .map_err(|e| format!("Failed to get a connection from the pool: {:?}", e))?;
+
+    Ok(())
 }
